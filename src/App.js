@@ -22,12 +22,14 @@ const particlesOptions = {
   }
 }
 
+//route: 'signin'
+//isSignedIn: false,
 const initialState = {
   input: '',
   imageUrl: '',
   boxes: [],
-  route: 'signin',
-  isSignedIn: false,
+  route: 'home',
+  isSignedIn: true,
   user: {
     id: '',
     name: '',
