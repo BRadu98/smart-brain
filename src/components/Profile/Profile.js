@@ -33,11 +33,10 @@ const Profile = ({ isProfileOpen, toggleModal, user, loadUser }) => {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({formInput: data})
     }).then(resp => {
-      console.log("USER ID: " + user.id)
       toggleModal();
       //keep what was there + overwrite maybe the age,name,pet
       loadUser({...user, ...data});
-    }).catch(console.log('onProfileUpdate err'))
+    }).catch(err => console.log(err))
   }
 
   return (
