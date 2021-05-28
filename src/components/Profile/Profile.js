@@ -28,7 +28,7 @@ const Profile = ({ isProfileOpen, toggleModal, user, loadUser }) => {
   }
 
   const onProfileUpdate = (data) => {
-    fetch(`http://localhost:3000/profile/${user.id}`, {
+    fetch(`http://localhost:3000/profile/${user.id}&${user.age}&${user.pet}`, {
       method: 'post',
       headers: { 
         'Content-Type': 'application/json',
@@ -38,6 +38,7 @@ const Profile = ({ isProfileOpen, toggleModal, user, loadUser }) => {
     }).then(resp => {
       //304 means the resp was cached by the browser and returns it
       if (resp.status === 200 || resp.status === 304) {
+        console.log("the pet is: " + user.pet)
         toggleModal();
         //keep what was there + overwrite maybe the age,name,pet
         loadUser({...user, ...data});
