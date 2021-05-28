@@ -35,8 +35,35 @@ class Register extends React.Component {
       .then(response => response.json())
       .then(user => {
         if (user.id) {
-          this.props.loadUser(user)
-          this.props.onRouteChange('home');
+          fetch('http://localhost:3000/signin', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.userId && data.success === 'true') {
+          window.sessionStorage.setItem('token', data.token);
+          fetch(`http://localhost:3000/profile/${data.userId}`, {
+            method: 'get',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': data.token
+            }
+          })
+          .then(resp => resp.json())
+          .then(user => {
+            if (user && user.email) {
+              this.props.loadUser(user)
+              this.props.onRouteChange('home');
+            }
+          })
+          .catch(console.log)
+        }
+      })
         }
       })
   }
